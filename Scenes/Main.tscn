@@ -1,0 +1,106 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Scripts/PivotCam.cs" type="Script" id=1]
+[ext_resource path="res://UI/bar.png" type="Texture" id=2]
+[ext_resource path="res://UI/SunIcon.png" type="Texture" id=3]
+[ext_resource path="res://Scripts/Light_Control.cs" type="Script" id=4]
+
+[sub_resource type="Curve3D" id=4]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -25.7114, -18.7751, -2.72978, 0, 0, 0, 0, 0, 0, -25.3962, -13.1225, 2.22096, 0, 0, 0, 0, 0, 0, -22.3752, -6.38657, 8.12056, 0, 0, 0, 0, 0, 0, -14.7631, -3.39355, 10.742, 0, 0, 0, 0, 0, 0, -0.0249417, -0.853627, 12.9665, 0, 0, 0, 0, 0, 0, 11.4998, -3.40761, 10.7296, 0, 0, 0, 0, 0, 0, 17.4204, -6.90337, 7.66793, 0, 0, 0, 0, 0, 0, 20.2821, -13.1615, 2.18688, 0, 0, 0, 0, 0, 0, 20.6696, -19.0778, -2.99484 ),
+"tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="CubeMesh" id=1]
+
+[sub_resource type="Curve2D" id=2]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -761.704, -224, 0, 0, 0, 0, -633.704, -272.263, 0, 0, 0, 0, -491.016, -314.23, 0, 0, 0, 0, -325.246, -345.705, 0, 0, 0, 0, -184.656, -362.492, 0, 0, 0, 0, -6.2951, -372.984, 0, 0, 0, 0, 218.229, -358.295, 0, 0, 0, 0, 335.737, -343.607, 0, 0, 0, 0, 446.95, -324.722, 0, 0, 0, 0, 543.475, -301.64, 0, 0, 0, 0, 652.589, -265.967, 0, 0, 0, 0, 757.507, -228.197 )
+}
+
+[node name="Spatial" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="CamPivot" type="Spatial" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0 )
+
+[node name="Camera" type="Camera" parent="CamPivot"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.76837e-07, 9.8995 )
+current = true
+
+[node name="Path" type="Path" parent="CamPivot/Camera"]
+curve = SubResource( 4 )
+
+[node name="PathFollow" type="PathFollow" parent="CamPivot/Camera/Path"]
+transform = Transform( -0.927515, -3.38562e-06, 0.373776, -1.01601e-07, 0.999999, 8.80555e-06, -0.37378, 8.12941e-06, -0.927507, -25.7114, -18.7751, -2.72978 )
+rotation_mode = 2
+loop = false
+
+[node name="DirectionalLight" type="DirectionalLight" parent="CamPivot/Camera/Path/PathFollow"]
+transform = Transform( -0.500004, -8.9407e-08, 0.866026, -5.96046e-08, 1, -1.49012e-08, -0.866033, -8.9407e-08, -0.500009, 0, 0, 0 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enable = true
+
+[node name="Tree" type="Tree" parent="CanvasLayer"]
+margin_left = 8.0
+margin_top = 378.0
+margin_right = 181.0
+margin_bottom = 539.0
+select_mode = 1
+
+[node name="Import" type="Button" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = -31.0
+margin_right = 181.0
+margin_bottom = -11.0
+text = "Export GIF"
+
+[node name="Export" type="Button" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = -57.0
+margin_right = 181.0
+margin_bottom = -37.0
+text = "Import Textures"
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+margin_left = 8.0
+margin_top = 361.0
+margin_right = 87.0
+margin_bottom = 375.0
+text = "File Explorer"
+
+[node name="Bar" type="Sprite" parent="."]
+position = Vector2( 398, 120 )
+scale = Vector2( 0.227667, 0.227667 )
+texture = ExtResource( 2 )
+
+[node name="Path2D" type="Path2D" parent="Bar"]
+scale = Vector2( 1.11433, 1.11433 )
+curve = SubResource( 2 )
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Bar/Path2D"]
+position = Vector2( -761.704, -224 )
+rotation = -0.360569
+loop = false
+script = ExtResource( 4 )
+
+[node name="Icon" type="TextureButton" parent="Bar/Path2D/PathFollow2D"]
+margin_left = -39.8029
+margin_top = -70.2908
+margin_right = 57.1971
+margin_bottom = 63.7092
+rect_scale = Vector2( 1.85173, 1.6137 )
+rect_pivot_offset = Vector2( 46.6213, 67.1242 )
+texture_normal = ExtResource( 3 )
+expand = true
+
+[connection signal="button_down" from="Bar/Path2D/PathFollow2D/Icon" to="Bar/Path2D/PathFollow2D" method="_on_Icon_button_down"]
+[connection signal="mouse_entered" from="Bar/Path2D/PathFollow2D/Icon" to="Bar/Path2D/PathFollow2D" method="_on_Icon_mouse_entered"]
