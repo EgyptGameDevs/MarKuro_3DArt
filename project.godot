@@ -14,6 +14,10 @@ config/name="MarKuro"
 run/main_scene="res://Scenes/Main.tscn"
 config/icon="res://UI/icon.png"
 
+[autoload]
+
+Singletons="*res://Scripts/Singletons.cs"
+
 [display]
 
 window/size/width=800

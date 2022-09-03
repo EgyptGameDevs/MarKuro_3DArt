@@ -1,17 +1,18 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Scripts/PivotCam.cs" type="Script" id=1]
 [ext_resource path="res://UI/bar.png" type="Texture" id=2]
 [ext_resource path="res://UI/SunIcon.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/Light_Control.cs" type="Script" id=4]
+[ext_resource path="res://Models/untitled.obj" type="ArrayMesh" id=5]
+[ext_resource path="res://Scripts/Import.cs" type="Script" id=7]
+[ext_resource path="res://Scripts/ChangeTex.cs" type="Script" id=8]
 
 [sub_resource type="Curve3D" id=4]
 _data = {
 "points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -25.7114, -18.7751, -2.72978, 0, 0, 0, 0, 0, 0, -25.3962, -13.1225, 2.22096, 0, 0, 0, 0, 0, 0, -22.3752, -6.38657, 8.12056, 0, 0, 0, 0, 0, 0, -14.7631, -3.39355, 10.742, 0, 0, 0, 0, 0, 0, -0.0249417, -0.853627, 12.9665, 0, 0, 0, 0, 0, 0, 11.4998, -3.40761, 10.7296, 0, 0, 0, 0, 0, 0, 17.4204, -6.90337, 7.66793, 0, 0, 0, 0, 0, 0, 20.2821, -13.1615, 2.18688, 0, 0, 0, 0, 0, 0, 20.6696, -19.0778, -2.99484 ),
 "tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 }
-
-[sub_resource type="CubeMesh" id=1]
 
 [sub_resource type="Curve2D" id=2]
 _data = {
@@ -40,35 +41,46 @@ loop = false
 transform = Transform( -0.500004, -8.9407e-08, 0.866026, -5.96046e-08, 1, -1.49012e-08, -0.866033, -8.9407e-08, -0.500009, 0, 0, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
-mesh = SubResource( 1 )
+mesh = ExtResource( 5 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enable = true
 
-[node name="Tree" type="Tree" parent="CanvasLayer"]
+[node name="Items" type="ItemList" parent="CanvasLayer"]
 margin_left = 8.0
 margin_top = 378.0
 margin_right = 181.0
 margin_bottom = 539.0
-select_mode = 1
+script = ExtResource( 8 )
 
 [node name="Import" type="Button" parent="CanvasLayer"]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 8.0
-margin_top = -31.0
+margin_top = -54.0
 margin_right = 181.0
-margin_bottom = -11.0
-text = "Export GIF"
+margin_bottom = -34.0
+text = "Import UV"
+script = ExtResource( 7 )
+
+[node name="FileDialog" type="FileDialog" parent="CanvasLayer/Import"]
+margin_left = 221.0
+margin_top = -404.0
+margin_right = 807.0
+margin_bottom = 3.0
+popup_exclusive = true
+resizable = true
+dialog_hide_on_ok = true
+access = 2
 
 [node name="Export" type="Button" parent="CanvasLayer"]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_left = 8.0
-margin_top = -57.0
+margin_top = -27.0
 margin_right = 181.0
-margin_bottom = -37.0
-text = "Import Textures"
+margin_bottom = -7.0
+text = "Export GIF"
 
 [node name="Label" type="Label" parent="CanvasLayer"]
 margin_left = 8.0
@@ -102,5 +114,10 @@ rect_pivot_offset = Vector2( 46.6213, 67.1242 )
 texture_normal = ExtResource( 3 )
 expand = true
 
+[connection signal="item_activated" from="CanvasLayer/Items" to="CanvasLayer/Items" method="_on_Items_item_activated"]
+[connection signal="button_up" from="CanvasLayer/Import" to="CanvasLayer/Import" method="_on_Import_button_up"]
+[connection signal="file_selected" from="CanvasLayer/Import/FileDialog" to="CanvasLayer/Import" method="_on_FileDialog_file_selected"]
+[connection signal="popup_hide" from="CanvasLayer/Import/FileDialog" to="CanvasLayer/Import" method="_on_FileDialog_popup_hide"]
 [connection signal="button_down" from="Bar/Path2D/PathFollow2D/Icon" to="Bar/Path2D/PathFollow2D" method="_on_Icon_button_down"]
+[connection signal="button_up" from="Bar/Path2D/PathFollow2D/Icon" to="Bar/Path2D/PathFollow2D" method="_on_Icon_button_up"]
 [connection signal="mouse_entered" from="Bar/Path2D/PathFollow2D/Icon" to="Bar/Path2D/PathFollow2D" method="_on_Icon_mouse_entered"]

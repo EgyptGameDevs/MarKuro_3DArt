@@ -22,21 +22,6 @@ public class Light_Control : PathFollow2D
 
 	}
 
-	public override void _Process(float delta)
-	{
-		base._Process(delta);
-		if(Input.IsActionJustReleased ("Mouse_click"))
-		{
-			flag = false;
-			pivotScript.candrag = true;
-			Input.SetMouseMode(Input.MouseModeEnum.Visible);
-
-		}
-
-	
-		GD.Print(Offset);
-	}
-
 	public override void _Input(InputEvent @event)
 	{
 		base._Input(@event);
@@ -54,6 +39,13 @@ public class Light_Control : PathFollow2D
 	{
 		
 	}
+
+	private void _on_Icon_button_up()
+	{
+		flag = false;
+		pivotScript.candrag = true;
+		Input.SetMouseMode(Input.MouseModeEnum.Visible);
+	}
 	
 	private void _on_Icon_button_down()
 	{
@@ -65,6 +57,9 @@ public class Light_Control : PathFollow2D
 		}
 	}
 }
+
+
+
 
 
 

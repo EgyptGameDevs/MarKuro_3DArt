@@ -21,6 +21,7 @@ public class PivotCam : Godot.Spatial
 	public override void _Input(InputEvent inputEvent)
 	{
 		base._Input(@inputEvent);
+		
 		if(candrag)
 		{
 			if (inputEvent is InputEventMouseMotion eventMouseButton)
