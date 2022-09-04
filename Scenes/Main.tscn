@@ -1,17 +1,87 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scripts/PivotCam.cs" type="Script" id=1]
 [ext_resource path="res://UI/bar.png" type="Texture" id=2]
 [ext_resource path="res://UI/SunIcon.png" type="Texture" id=3]
 [ext_resource path="res://Scripts/Light_Control.cs" type="Script" id=4]
 [ext_resource path="res://Models/untitled.obj" type="ArrayMesh" id=5]
+[ext_resource path="res://Scripts/Export.cs" type="Script" id=6]
 [ext_resource path="res://Scripts/Import.cs" type="Script" id=7]
 [ext_resource path="res://Scripts/ChangeTex.cs" type="Script" id=8]
+[ext_resource path="res://Scripts/ImportMesh.cs" type="Script" id=9]
 
 [sub_resource type="Curve3D" id=4]
 _data = {
 "points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -25.7114, -18.7751, -2.72978, 0, 0, 0, 0, 0, 0, -25.3962, -13.1225, 2.22096, 0, 0, 0, 0, 0, 0, -22.3752, -6.38657, 8.12056, 0, 0, 0, 0, 0, 0, -14.7631, -3.39355, 10.742, 0, 0, 0, 0, 0, 0, -0.0249417, -0.853627, 12.9665, 0, 0, 0, 0, 0, 0, 11.4998, -3.40761, 10.7296, 0, 0, 0, 0, 0, 0, 17.4204, -6.90337, 7.66793, 0, 0, 0, 0, 0, 0, 20.2821, -13.1615, 2.18688, 0, 0, 0, 0, 0, 0, 20.6696, -19.0778, -2.99484 ),
 "tilts": PoolRealArray( 0, 0, 0, 0, 0, 0, 0, 0, 0 )
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "360Rot"
+length = 5.0
+tracks/0/type = "transform"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = PoolRealArray(  )
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 0, 360, 0 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath(".:rotation_degrees:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath(".:rotation_degrees:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 360, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath(".:rotation_degrees:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath(".:rotation_degrees")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 360, 0 ) ]
 }
 
 [sub_resource type="Curve2D" id=2]
@@ -33,7 +103,8 @@ current = true
 curve = SubResource( 4 )
 
 [node name="PathFollow" type="PathFollow" parent="CamPivot/Camera/Path"]
-transform = Transform( -0.927515, -3.38562e-06, 0.373776, -1.01601e-07, 0.999999, 8.80555e-06, -0.37378, 8.12941e-06, -0.927507, -25.7114, -18.7751, -2.72978 )
+transform = Transform( -0.71935, -0.000393219, 0.694637, -0.00038162, 0.999999, 0.000170876, -0.694643, -0.000142169, -0.719345, -25.6145, -17.0365, -1.20704 )
+offset = 2.31411
 rotation_mode = 2
 loop = false
 
@@ -41,37 +112,22 @@ loop = false
 transform = Transform( -0.500004, -8.9407e-08, 0.866026, -5.96046e-08, 1, -1.49012e-08, -0.866033, -8.9407e-08, -0.500009, 0, 0, 0 )
 
 [node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 1.74846e-07, 0, 1, 0, -1.74846e-07, 0, 1, 0, 0, 0 )
 mesh = ExtResource( 5 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MeshInstance"]
+anims/360Rot = SubResource( 5 )
+anims/RESET = SubResource( 6 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enable = true
 
 [node name="Items" type="ItemList" parent="CanvasLayer"]
 margin_left = 8.0
-margin_top = 378.0
+margin_top = 467.0
 margin_right = 181.0
 margin_bottom = 539.0
 script = ExtResource( 8 )
-
-[node name="Import" type="Button" parent="CanvasLayer"]
-anchor_top = 1.0
-anchor_bottom = 1.0
-margin_left = 8.0
-margin_top = -54.0
-margin_right = 181.0
-margin_bottom = -34.0
-text = "Import UV"
-script = ExtResource( 7 )
-
-[node name="FileDialog" type="FileDialog" parent="CanvasLayer/Import"]
-margin_left = 221.0
-margin_top = -404.0
-margin_right = 807.0
-margin_bottom = 3.0
-popup_exclusive = true
-resizable = true
-dialog_hide_on_ok = true
-access = 2
 
 [node name="Export" type="Button" parent="CanvasLayer"]
 anchor_top = 1.0
@@ -81,13 +137,56 @@ margin_top = -27.0
 margin_right = 181.0
 margin_bottom = -7.0
 text = "Export GIF"
+script = ExtResource( 6 )
 
 [node name="Label" type="Label" parent="CanvasLayer"]
 margin_left = 8.0
-margin_top = 361.0
+margin_top = 450.0
 margin_right = 87.0
-margin_bottom = 375.0
-text = "File Explorer"
+margin_bottom = 464.0
+text = "Textures"
+
+[node name="ImportUV" type="Button" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 8.0
+margin_top = -54.0
+margin_right = 181.0
+margin_bottom = -34.0
+text = "Import UV"
+script = ExtResource( 7 )
+
+[node name="FileDialog" type="FileDialog" parent="CanvasLayer/ImportUV"]
+margin_left = 221.0
+margin_top = -404.0
+margin_right = 807.0
+margin_bottom = 3.0
+popup_exclusive = true
+window_title = "Import Texture"
+resizable = true
+dialog_hide_on_ok = true
+access = 2
+
+[node name="ImportMesh" type="Button" parent="CanvasLayer"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 615.0
+margin_top = -27.0
+margin_right = 788.0
+margin_bottom = -7.0
+text = "Import Mesh"
+script = ExtResource( 9 )
+
+[node name="FileDialog" type="FileDialog" parent="CanvasLayer/ImportMesh"]
+margin_left = 221.0
+margin_top = -404.0
+margin_right = 807.0
+margin_bottom = 3.0
+popup_exclusive = true
+window_title = "Import Mesh"
+resizable = true
+dialog_hide_on_ok = true
+access = 2
 
 [node name="Bar" type="Sprite" parent="."]
 position = Vector2( 398, 120 )
@@ -115,9 +214,13 @@ texture_normal = ExtResource( 3 )
 expand = true
 
 [connection signal="item_activated" from="CanvasLayer/Items" to="CanvasLayer/Items" method="_on_Items_item_activated"]
-[connection signal="button_up" from="CanvasLayer/Import" to="CanvasLayer/Import" method="_on_Import_button_up"]
-[connection signal="file_selected" from="CanvasLayer/Import/FileDialog" to="CanvasLayer/Import" method="_on_FileDialog_file_selected"]
-[connection signal="popup_hide" from="CanvasLayer/Import/FileDialog" to="CanvasLayer/Import" method="_on_FileDialog_popup_hide"]
+[connection signal="button_up" from="CanvasLayer/Export" to="CanvasLayer/Export" method="_on_Export_button_up"]
+[connection signal="button_up" from="CanvasLayer/ImportUV" to="CanvasLayer/ImportUV" method="_on_Import_button_up"]
+[connection signal="file_selected" from="CanvasLayer/ImportUV/FileDialog" to="CanvasLayer/ImportUV" method="_on_FileDialog_file_selected"]
+[connection signal="popup_hide" from="CanvasLayer/ImportUV/FileDialog" to="CanvasLayer/ImportUV" method="_on_FileDialog_popup_hide"]
+[connection signal="button_up" from="CanvasLayer/ImportMesh" to="CanvasLayer/ImportMesh" method="_on_ImportMesh_button_up"]
+[connection signal="file_selected" from="CanvasLayer/ImportMesh/FileDialog" to="CanvasLayer/ImportMesh" method="_on_FileDialog_file_selected"]
+[connection signal="popup_hide" from="CanvasLayer/ImportMesh/FileDialog" to="CanvasLayer/ImportMesh" method="_on_FileDialog_popup_hide"]
 [connection signal="button_down" from="Bar/Path2D/PathFollow2D/Icon" to="Bar/Path2D/PathFollow2D" method="_on_Icon_button_down"]
 [connection signal="button_up" from="Bar/Path2D/PathFollow2D/Icon" to="Bar/Path2D/PathFollow2D" method="_on_Icon_button_up"]
 [connection signal="mouse_entered" from="Bar/Path2D/PathFollow2D/Icon" to="Bar/Path2D/PathFollow2D" method="_on_Icon_mouse_entered"]

@@ -1,0 +1,20 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/Monkey.obj-eb11c14128c0ce9e8677902c5c405edd.mesh"
+
+[deps]
+
+files=[ "res://.import/Monkey.obj-eb11c14128c0ce9e8677902c5c405edd.mesh" ]
+
+source_file="res://Imported_Meshes/Monkey.obj"
+dest_files=[ "res://.import/Monkey.obj-eb11c14128c0ce9e8677902c5c405edd.mesh", "res://.import/Monkey.obj-eb11c14128c0ce9e8677902c5c405edd.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+octahedral_compression=true
+optimize_mesh_flags=4286

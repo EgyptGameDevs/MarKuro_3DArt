@@ -35,7 +35,7 @@ public class Import : Button
 			if(!item.ItemName.Contains("import"))
 			{
 				n.AddItem(item.ItemName);
-				GD.Print(item.ItemName);
+				//GD.Print(item.ItemName);
 			}
 		}
 	}
@@ -45,12 +45,12 @@ public class Import : Button
 		var global = GetNode<Singletons>("/root/Singletons");
 
 		FileDialog n = GetNode<FileDialog>("FileDialog");
-		GD.Print("Pressed");
+		//GD.Print("Pressed");
 		n.PopupCentered();
 		global.pivot_cam_script.candrag = false;
 		
 		Input.SetMouseMode(Input.MouseModeEnum.Visible);
-		GD.Print("visible");
+		//GD.Print("visible");
 
 	}
 	
@@ -62,10 +62,9 @@ public class Import : Button
 
 	private void _on_FileDialog_file_selected(String path)
 	{
-		GD.Print(path);
-		
+		//GD.Print(path);
 		String destination = ProjectSettings.GlobalizePath("res://Imported/");
-		GD.Print(destination + System.IO.Path.GetFileName(path));
+		//GD.Print(destination + System.IO.Path.GetFileName(path));
 		
 		List_Items item = new List_Items();
 		item.ItemName = System.IO.Path.GetFileName(path);

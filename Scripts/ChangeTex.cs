@@ -7,9 +7,9 @@ public class ChangeTex : ItemList
 	{
 		var global = GetNode<Singletons>("/root/Singletons");
 		String destination = ProjectSettings.GlobalizePath("res://Imported/");
-		global.Mesh.MaterialOverride = new SpatialMaterial();
+		global.Mesh_Node.MaterialOverride = new SpatialMaterial();
 		var texture = ResourceLoader.Load(destination + GetItemText(index));
-		global.Mesh.MaterialOverride.Set("albedo_texture", texture);
+		global.Mesh_Node.MaterialOverride.Set("albedo_texture", texture);
 		//
 	}
 
